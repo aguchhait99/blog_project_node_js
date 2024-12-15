@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%-include('../common/head')%>
+
+  <body>
+    <div class="wrapper">
+      <%-include('../common/sidebar')%>
+
+      <div class="main">
+        <%-include('../common/navbar')%>
+
+        <main class="content">
+          <div class="container-fluid p-0">
+            <h1 class="h3 mb-3"><strong>Blog List</strong></h1>
+
+            <a href="<%= generateUrl('blog-add-page') %>" class="btn btn-info"
+              >Add-Blog</a
+            >
+            <table class="table table-bordered mt-2">
+              <thead>
+                <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">Author</th>
+                  <th scope="col">Content</th>
+                  <th scope="col">Status</th>
+                  <th colspan="2">Action</th>
+                </tr>
+              </thead>
+              <% for(let item of data){ %>
+              <tbody>
+                <tr>
+                  <th scope="row"><%=item.title %></th>
+                  <td><%= item.author %></td>
+                  <td><%- item.content %></td>
+                  <td><%=item.status %></td>
+                  <td><a href="" class="btn btn-success">Update</a></td>
+                  <td><a href="" class="btn btn-danger">Delete</a></td>
+                </tr>
+              </tbody>
+              <%}%> <% if(data.length < 1){%>
+              <p><center>No Data</center></p>
+              <%}%>
+            </table>
+          </div>
+        </main>
+
+        <%-include('../common/footer')%>
+      </div>
+    </div>
+  </body>
+</html>
