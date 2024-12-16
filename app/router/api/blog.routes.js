@@ -5,5 +5,10 @@ const router = express.Router();
 const namedRouter = routerLabel(router);
 
 namedRouter.get("allBlog", "/all-blog", BlogApiController.getAllBlog);
+namedRouter.get(
+  "singleBlog",
+  "/single-blog/:id",
+  BlogApiController.getSingleBlog
+);
 
 module.exports = router;
