@@ -33,8 +33,20 @@
                   <td><%= item.author %></td>
                   <td><%- item.content %></td>
                   <td><%=item.status %></td>
-                  <td><a href="" class="btn btn-success">Update</a></td>
-                  <td><a href="" class="btn btn-danger">Delete</a></td>
+                  <td>
+                    <a
+                      href="<%= generateUrl('blog-edit-page', {id: item._id}) %>"
+                      class="btn btn-success"
+                      >Update</a
+                    >
+                  </td>
+                  <td>
+                    <a
+                      href="<%= generateUrl('blog-delete', {id: item._id}) %>"
+                      class="btn btn-danger"
+                      >Delete</a
+                    >
+                  </td>
                 </tr>
               </tbody>
               <%}%> <% if(data.length < 1){%>
