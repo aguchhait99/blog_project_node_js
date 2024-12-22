@@ -11,6 +11,15 @@ const UserRepositories = {
       throw new Error("Database operation failed.");
     }
   },
+
+  userDelete: async (id) => {
+    try{
+      const user = await UserModel.findByIdAndDelete({id})
+      return user;
+    }catch(err){
+      console.log(err)
+    }
+  }
 };
 
 module.exports = UserRepositories;

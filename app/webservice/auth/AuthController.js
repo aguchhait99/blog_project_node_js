@@ -37,9 +37,6 @@ class AuthController {
         password: hashedPassword,
         image: req?.file ? req.file?.path : null, 
       };
-
-      console.log("Request body data: ", req.body);
-
       // Save user
       const user = await UserRepositories.userRegistration(data);
 
