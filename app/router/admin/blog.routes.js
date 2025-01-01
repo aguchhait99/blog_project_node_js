@@ -6,6 +6,8 @@ const { AuthAdmin } = require("../../middleware/auth");
 const router = express.Router();
 const namedRouter = routerLabel(router);
 
+// namedRouter.get({AuthAdmin})
+
 namedRouter.get(
   "blog-list",
   "/blog-list",

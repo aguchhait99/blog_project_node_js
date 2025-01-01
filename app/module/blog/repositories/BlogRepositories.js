@@ -2,13 +2,21 @@ const BlogModel = require("../model/BlogModel");
 
 const BlogRepositories = {
   // Get all Blog
-  getAll: async () => {
+  getAll: async (page) => {
     try {
-      const blog = await BlogModel.find();
+      const limit = 10;
+      const totalData = await BlogModel.countDocuments();
+      const totalPage = Math.ceil(totalData / limit);
+      const nextPage = page < totalPage ? page + 1 : null;
+      const prevPage = page > 1 ? page - 1 : null;
+
+      const blog = await BlogModel.find({ isDelete: { $ne: true } })
+        .skip((page - 1) * limit)
+        .limit(limit);
       if (!blog) {
         return null;
       }
-      return blog;
+      return { blog, page, prevPage, nextPage, totalPage, totalData };
     } catch (err) {
       console.log(err);
     }
@@ -48,6 +56,19 @@ const BlogRepositories = {
   delete: async (id) => {
     try {
       const blog = await BlogModel.findByIdAndDelete(id);
+      if (!blog) {
+        return null;
+      }
+      return blog;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  // Soft Delete Blog
+  softDelete: async (id) => {
+    try {
+      const blog = await BlogModel.findByIdAndUpdate(id, { isDelete: true });
       if (!blog) {
         return null;
       }

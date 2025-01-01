@@ -8,9 +8,10 @@ class BlogController {
   // Blog List Page
   async blogListPage(req, res) {
     try {
-      const blogData = await BlogRepositories.getAll();
+      const { blog, page, prevPage, nextPage, totalPage, totalData } =
+        await BlogRepositories.getAll();
       res.render("blog/list", {
-        data: blogData,
+        data: blog,
       });
     } catch (err) {
       console.log(err);
@@ -72,7 +73,7 @@ class BlogController {
   async deleteBlog(req, res) {
     try {
       const id = req.params.id;
-      const data = await BlogRepositories.delete(id);
+      const data = await BlogRepositories.softDelete(id);
       if (data) {
         res.redirect(namedRouter.urlFor("blog-list"));
       }

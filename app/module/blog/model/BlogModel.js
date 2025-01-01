@@ -20,6 +20,10 @@ const blogSchema = new Schema(
       default: "Active",
       require: true,
     },
+    isDelete: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
