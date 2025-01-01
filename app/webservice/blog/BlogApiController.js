@@ -11,7 +11,7 @@ class BlogApiController {
       res.status(200).json({
         status: true,
         message: "Blog fetched successfully.",
-        count: blog.length,
+        count: totalData,
         page,
         totalPage,
         prevPage,

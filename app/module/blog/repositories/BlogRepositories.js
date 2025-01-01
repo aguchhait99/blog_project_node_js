@@ -4,8 +4,8 @@ const BlogRepositories = {
   // Get all Blog
   getAll: async (page) => {
     try {
-      const limit = 10;
-      const totalData = await BlogModel.countDocuments();
+      const limit = 5;
+      const totalData = await BlogModel.countDocuments({ isDelete: { $ne: true } });
       const totalPage = Math.ceil(totalData / limit);
       const nextPage = page < totalPage ? page + 1 : null;
       const prevPage = page > 1 ? page - 1 : null;
