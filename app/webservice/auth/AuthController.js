@@ -1,5 +1,8 @@
 const { hashPassword, comparePassword } = require("../../helper/commonHelper");
-const UserModel = require("../../module/auth/model/user");
+const {
+  UserModel,
+  UserValidationSchema,
+} = require("../../module/auth/model/user");
 const UserRepositories = require("../../module/auth/repositories/UserRepositories");
 const jwt = require("jsonwebtoken");
 const SECRET_KEY = process.env.JWT_ACCESS_TOKEN_SECRET_KEY;
@@ -35,29 +38,36 @@ class AuthController {
         name: name,
         email: email,
         password: hashedPassword,
-        image: req?.file ? req.file?.path : null, 
+        image: req?.file ? req.file?.path : null,
       };
-      // Save user
-      const user = await UserRepositories.userRegistration(data);
+      const { error, value } = UserValidationSchema.validate(data);
+      if (error) {
+        return res.status(401).json({
+          message: error.details[0].message,
+        });
+      } else {
+        // Save user
+        const user = await UserRepositories.userRegistration(data);
 
-      // Check if user creation failed
-      if (!user) {
-        return res.status(500).json({
-          status: false,
-          message: "Failed to register user. Please try again.",
+        // Check if user creation failed
+        if (!user) {
+          return res.status(500).json({
+            status: false,
+            message: "Failed to register user. Please try again.",
+          });
+        }
+
+        // Successful response
+        return res.status(201).json({
+          status: true,
+          message: "User registered successfully.",
+          data: {
+            name: user.name,
+            email: user.email,
+            image: user.image,
+          },
         });
       }
-
-      // Successful response
-      return res.status(201).json({
-        status: true,
-        message: "User registered successfully.",
-        data: {
-          name: user.name,
-          email: user.email,
-          image: user.image,
-        },
-      });
     } catch (err) {
       console.error("Error in user registration: ", err.message);
       return res.status(500).json({

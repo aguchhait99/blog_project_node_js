@@ -12,6 +12,8 @@ class BlogController {
         await BlogRepositories.getAll();
       res.render("blog/list", {
         data: blog,
+        currentPage: page,
+        totalPage: totalPage,
       });
     } catch (err) {
       console.log(err);
