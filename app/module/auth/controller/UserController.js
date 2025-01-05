@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const routerLabel = require("route-label");
-const UserModel = require("../model/user");
 const { comparePassword } = require("../../../helper/commonHelper");
 const namedRouter = routerLabel(router);
 const jwt = require("jsonwebtoken");
+const { UserModel } = require("../model/user");
 const SECRET_KEY = process.env.JWT_ACCESS_TOKEN_SECRET_KEY;
 
 class UserController {

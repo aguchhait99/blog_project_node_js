@@ -47,7 +47,7 @@ class AuthController {
         });
       } else {
         // Save user
-        const user = await UserRepositories.userRegistration(data);
+        const user = await UserRepositories.userRegistration(value);
 
         // Check if user creation failed
         if (!user) {
